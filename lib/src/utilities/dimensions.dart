@@ -9,12 +9,12 @@ class Dimensions {
   // static double pageViewTextContainer = screenHeight/7.03; // <= 844/(844/120)
 
 
-  static double height(double size){
+  static double heightDynamic(double size){
     double x = 844 / size;
     return screenHeight / x;
   }
 
-  static double width(double size){
+  static double widthDynamic(double size){
     double x = screenWidth / size;
     // print("x =");
     // print(x);

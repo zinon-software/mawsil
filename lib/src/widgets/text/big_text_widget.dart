@@ -22,7 +22,7 @@ class BigText extends StatelessWidget {
       maxLines: 1,
       overflow: overflow,
       style: TextStyle(
-        fontSize: size==0? Dimensions.height(20) :size ,
+        fontSize: size==0? Dimensions.heightDynamic(20) :size ,
         color: color,
         fontWeight: FontWeight.w400,
       ),
