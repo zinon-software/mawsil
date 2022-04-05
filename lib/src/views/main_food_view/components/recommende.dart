@@ -3,8 +3,8 @@ import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
 import 'package:mawsil/src/widgets/text/small_text_widget.dart';
 
-class PopularMainView extends StatelessWidget {
-  const PopularMainView({Key? key}) : super(key: key);
+class RecommendedMainView extends StatelessWidget {
+  const RecommendedMainView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

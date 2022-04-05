@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'urls.dart';
+import 'app_urls.dart';
 
 class ApiClient extends GetConnect implements GetxService {
 
@@ -28,13 +28,4 @@ class ApiClient extends GetConnect implements GetxService {
     } 
   }
   
-}
-
-class PopularProductRepo extends GetxService{
-  final ApiClient apiClient;
-  PopularProductRepo({required this.apiClient});
-
-  Future<Response> getPopularProductList() async{
-    return await apiClient.getData(AppUrls.POPULAR_PRODUCTE_URL);
-  }
 }

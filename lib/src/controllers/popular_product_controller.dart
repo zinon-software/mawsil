@@ -1,8 +1,6 @@
-import 'dart:developer';
 import 'package:get/get.dart';
-import 'package:mawsil/src/services/api_client.dart';
-
 import '../models/popular_product_model.dart';
+import '../repository/popular_product_repo.dart';
 
 class PopularProductController extends GetxController {
   final PopularProductRepo popularProductRepo;
@@ -15,11 +13,8 @@ class PopularProductController extends GetxController {
 
   Future<void> getPopularProductList() async{
     Response response = await popularProductRepo.getPopularProductList();
-      log("response");
     if (response.statusCode == 200) {
       _popularProductList = [];
-      log("response");
-      log(response.body.toString());
       _popularProductList.addAll(Product.fromJson(response.body).getProducts);
       _isLoaded=true;
       update();

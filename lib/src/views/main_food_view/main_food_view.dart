@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'components/app_bar.dart';
 import 'components/list_food.dart';
-import 'components/popular.dart';
+import 'components/recommende.dart';
 import 'components/slide_show.dart';
 
 class MainFoodView extends StatelessWidget {
@@ -20,7 +20,7 @@ class MainFoodView extends StatelessWidget {
                 child: Column(
                   children: const [
                     SlideShowMainView(),
-                    PopularMainView(),
+                    RecommendedMainView(),
                     ListFoodMainView(),
                   ],
                 ),
