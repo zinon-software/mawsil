@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
@@ -6,8 +7,8 @@ import 'package:mawsil/src/widgets/text/big_text_widget.dart';
 import '../../widgets/icon/app_icon.dart';
 import '../../widgets/text/exandable_text_widget.dart';
 
-class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({Key? key}) : super(key: key);
+class RecommendedFoodDetailView extends StatelessWidget {
+  const RecommendedFoodDetailView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +17,18 @@ class RecommendedFoodDetail extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: Dimensions.heightDynamic(80),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                AppIcon(
-                  icon: Icons.close,
+              children:  [
+                GestureDetector(
+                  onTap: ()=> Get.back(),
+                  child: const AppIcon(
+                    icon: Icons.close,
+                  ),
                 ),
-                AppIcon(
+                const AppIcon(
                   icon: Icons.shopping_cart_outlined,
                 ),
               ],

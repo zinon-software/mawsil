@@ -8,8 +8,8 @@ import 'text/big_text_widget.dart';
 import 'text/small_text_widget.dart';
 
 class AppColumn extends StatelessWidget {
-  final ProductModel popularProductList;
-  const AppColumn({Key? key, required this.popularProductList}) : super(key: key);
+  final ProductModel popularProduct;
+  const AppColumn({Key? key, required this.popularProduct}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AppColumn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        BigText(text: "${popularProductList.name}", size: Dimensions.heightDynamic(23),),
+        BigText(text: "${popularProduct.name}", size: Dimensions.heightDynamic(23),),
         // BigText(text: "Chinese Side", size: Dimensions.heightDynamic(26),),
         SizedBox(height: Dimensions.heightDynamic(8)),
         Row(

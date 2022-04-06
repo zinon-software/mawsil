@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
 
+import '../../controllers/popular_product_controller.dart';
+import '../../models/product_model.dart';
 import '../../widgets/column.dart';
 import '../../widgets/icon/app_icon.dart';
 import '../../widgets/text/exandable_text_widget.dart';
 
-class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key? key}) : super(key: key);
+class PopularFoodDetailView extends StatelessWidget {
+  final int pageId;
+  const PopularFoodDetailView({Key? key, required this.pageId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ProductModel product =
+        Get.find<PopularProductController>().popularProductList[pageId];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -23,10 +31,10 @@ class PopularFoodDetail extends StatelessWidget {
             child: Container(
               height: Dimensions.heightDynamic(350),
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Color.fromARGB(255, 173, 157, 5),
                 image: DecorationImage(
-                  image: AssetImage("assets/image/food.jpg"),
+                  image:  NetworkImage(product.img!),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -39,11 +47,14 @@ class PopularFoodDetail extends StatelessWidget {
             right: Dimensions.heightDynamic(20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                AppIcon(
-                  icon: Icons.arrow_back_ios,
+              children: [
+                GestureDetector(
+                  onTap: () => Get.back(),
+                  child: const AppIcon(
+                    icon: Icons.arrow_back_ios,
+                  ),
                 ),
-                AppIcon(
+                const AppIcon(
                   icon: Icons.shopping_cart_outlined,
                 ),
               ],
@@ -67,19 +78,16 @@ class PopularFoodDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const AppColumn(),
-                  SizedBox(
-                    height: Dimensions.heightDynamic(20),
+                  AppColumn(
+                    popularProduct: product,
                   ),
+                  SizedBox(height: Dimensions.heightDynamic(20)),
                   BigText(text: "Indroduce"),
-                  SizedBox(
-                    height: Dimensions.heightDynamic(20),
-                  ),
-                  const Expanded(
+                  SizedBox(height: Dimensions.heightDynamic(20)),
+                  Expanded(
                     child: SingleChildScrollView(
                       child: ExpandableTextWidget(
-                          text:
-                              "Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh"),
+                          text: product.description!),
                     ),
                   ),
                 ],
@@ -151,7 +159,7 @@ class PopularFoodDetail extends StatelessWidget {
                 ),
               ),
               child: BigText(
-                text: "\$0.08 | Add to cart",
+                text: "\$${product.price} | Add to cart",
                 color: Colors.white,
               ),
             ),
