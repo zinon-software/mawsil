@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import 'app_urls.dart';
-
 class ApiClient extends GetConnect implements GetxService {
 
   late String token = "";

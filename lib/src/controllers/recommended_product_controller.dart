@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:get/get.dart';
 import '../models/popular_product_model.dart';
 import '../repository/recommended_product_repo.dart';
@@ -23,4 +22,18 @@ class RecommendedProductController extends GetxController {
 
     }
   }
+
+  int _quantity = 0;
+
+  int get quantity => _quantity;
+
+  void setQuantity (bool isIncrement){
+    if (isIncrement) {
+      _quantity++;
+    } else {
+      _quantity--;
+    }
+    update();
+  }
+  
 }

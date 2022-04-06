@@ -20,6 +20,7 @@ class PopularFoodDetailView extends StatelessWidget {
     ProductModel product =
         Get.find<PopularProductController>().popularProductList[pageId];
 
+    Get.find<PopularProductController>().initProduct();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -105,64 +106,72 @@ class PopularFoodDetailView extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: Dimensions.heightDynamic(120),
-        padding: EdgeInsets.only(
-            left: Dimensions.heightDynamic(20),
-            right: Dimensions.heightDynamic(20)),
-        decoration: BoxDecoration(
-          color: AppColors.buttonBackgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(Dimensions.heightDynamic(30) + 2),
-            topRight: Radius.circular(Dimensions.heightDynamic(30) + 2),
+      bottomNavigationBar: GetBuilder<PopularProductController>(
+        builder: (popularController) => Container(
+          height: Dimensions.heightDynamic(120),
+          padding: EdgeInsets.only(
+              left: Dimensions.heightDynamic(20),
+              right: Dimensions.heightDynamic(20)),
+          decoration: BoxDecoration(
+            color: AppColors.buttonBackgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimensions.heightDynamic(30) + 2),
+              topRight: Radius.circular(Dimensions.heightDynamic(30) + 2),
+            ),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(
-                  Dimensions.heightDynamic(20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(
+                    Dimensions.heightDynamic(20),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () => popularController.setQuantity(false),
+                      child: Icon(
+                        Icons.remove,
+                        color: AppColors.signColor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: Dimensions.heightDynamic(10) / 2,
+                    ),
+                    BigText(text: popularController.quantity.toString()),
+                    SizedBox(
+                      width: Dimensions.heightDynamic(10) / 2,
+                    ),
+                    GestureDetector(
+                      onTap: () => popularController.setQuantity(true),
+                      child: Icon(
+                        Icons.add,
+                        color: AppColors.signColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(
-                    Icons.remove,
-                    color: AppColors.signColor,
+              Container(
+                padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
+                decoration: BoxDecoration(
+                  color: AppColors.mainColor,
+                  borderRadius: BorderRadius.circular(
+                    Dimensions.heightDynamic(20),
                   ),
-                  SizedBox(
-                    width: Dimensions.heightDynamic(10) / 2,
-                  ),
-                  BigText(text: "0"),
-                  SizedBox(
-                    width: Dimensions.heightDynamic(10) / 2,
-                  ),
-                  Icon(
-                    Icons.add,
-                    color: AppColors.signColor,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
-              decoration: BoxDecoration(
-                color: AppColors.mainColor,
-                borderRadius: BorderRadius.circular(
-                  Dimensions.heightDynamic(20),
+                ),
+                child: BigText(
+                  text: "\$${product.price} | Add to cart",
+                  color: Colors.white,
                 ),
               ),
-              child: BigText(
-                text: "\$${product.price} | Add to cart",
-                color: Colors.white,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
