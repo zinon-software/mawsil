@@ -4,14 +4,19 @@ import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
 
+import '../../controllers/recommended_product_controller.dart';
+import '../../models/product_model.dart';
 import '../../widgets/icon/app_icon.dart';
 import '../../widgets/text/exandable_text_widget.dart';
 
 class RecommendedFoodDetailView extends StatelessWidget {
-  const RecommendedFoodDetailView({Key? key}) : super(key: key);
+  final int pageId;
+  const RecommendedFoodDetailView({Key? key, required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ProductModel product =
+        Get.find<RecommendedProductController>().recommendeProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -48,7 +53,7 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     width: double.maxFinite,
                     child: Center(
                         child: BigText(
-                      text: "Sliver App Bar",
+                      text: product.name!,
                       size: Dimensions.heightDynamic(26),
                     ))),
                 preferredSize: Size.fromHeight(Dimensions.heightDynamic(20))),
@@ -56,8 +61,8 @@ class RecommendedFoodDetailView extends StatelessWidget {
             backgroundColor: AppColors.mainColor,
             expandedHeight: Dimensions.heightDynamic(300),
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                "assets/image/food.jpg",
+              background: Image.network(
+                product.img!,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -71,9 +76,9 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     left: Dimensions.heightDynamic(20),
                     right: Dimensions.heightDynamic(20),
                   ),
-                  child: const ExpandableTextWidget(
+                  child: ExpandableTextWidget(
                     text:
-                        "Chicken marinated in a spiced yoghurt is placed in a large pot, then layere is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshChicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), freshiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh Chicken marinated in a spiced yoghurt is placed in a large pot, then layered with fried onions (cheeky easy sub below!), fresh",
+                        product.description!,
                   ),
                 )
               ],
@@ -101,7 +106,7 @@ class RecommendedFoodDetailView extends StatelessWidget {
                   icon: Icons.remove,
                 ),
                 BigText(
-                  text: "\$2.08 x 0",
+                  text: "\$${product.price} x 0",
                   color: AppColors.mainBlackColor,
                   size: Dimensions.heightDynamic(26),
                 ),
@@ -144,7 +149,7 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     ),
                   ),
                   child: BigText(
-                    text: "\$0.08 | Add to cart",
+                    text: "\$${product.price} | Add to cart",
                     color: Colors.white,
                   ),
                 ),

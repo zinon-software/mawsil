@@ -14,13 +14,18 @@ class MainFoodView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            // app bar
             const AppBarMainView(),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: const [
+                    // slide show food
                     SlideShowMainView(),
+                    // recommended titel
                     RecommendedMainView(),
+                    // recommended food
+                    // list of food and image
                     ListFoodMainView(),
                   ],
                 ),

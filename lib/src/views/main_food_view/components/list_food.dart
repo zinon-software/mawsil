@@ -76,13 +76,13 @@ class ListFoodMainView extends StatelessWidget {
                                   text: recommendedProduct.name ?? "Nutritious fruit meal is china",
                                 ),
                                 SizedBox(
-                                  height: Dimensions.heightDynamic(10),
+                                  height: Dimensions.heightDynamic(8),
                                 ),
                                 SmallText(
                                   text: "With chinese charactristics",
                                 ),
                                 SizedBox(
-                                  height: Dimensions.heightDynamic(10),
+                                  height: Dimensions.heightDynamic(8),
                                 ),
                                 Row(
                                   mainAxisAlignment:

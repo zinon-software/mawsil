@@ -1,13 +1,13 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mawsil/routes.dart';
-import 'package:mawsil/src/controllers/popular_product_controller.dart';
-import 'package:mawsil/src/utilities/dimensions.dart';
-import 'package:mawsil/src/widgets/column.dart';
 
+import '../../../../routes.dart';
+import '../../../controllers/popular_product_controller.dart';
 import '../../../models/product_model.dart';
 import '../../../utilities/app_colors.dart';
+import '../../../utilities/dimensions.dart';
+import '../../../widgets/column.dart';
 
 class SlideShowMainView extends StatefulWidget {
   const SlideShowMainView({Key? key}) : super(key: key);
@@ -40,6 +40,7 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // slide show page
         GetBuilder<PopularProductController>(builder: (popularProducts) {
           return !popularProducts.isLoaded
               ? CircularProgressIndicator(
@@ -56,6 +57,7 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
                   ),
                 );
         }),
+        // dots
         GetBuilder<PopularProductController>(builder: (popularProducts) {
           return DotsIndicator(
             dotsCount: popularProducts.popularProductList.isEmpty
@@ -102,8 +104,6 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
         ..setTranslationRaw(0, _height * (1 - _scaleFactor) / 2, 1);
     }
 
-
-
     return GestureDetector(
       onTap: () => Get.toNamed(RouteHelper.getPopularFood(index)),
       child: Transform(
@@ -112,7 +112,6 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
           children: [
             Container(
               height: Dimensions.widthDynamic(210),
-
               margin: EdgeInsets.only(
                   left: Dimensions.heightDynamic(5),
                   right: Dimensions.heightDynamic(5)),

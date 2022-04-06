@@ -17,7 +17,10 @@ class AppColumn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        BigText(text: "${popularProduct.name}", size: Dimensions.heightDynamic(23),),
+        BigText(
+          text: "${popularProduct.name}",
+          size: Dimensions.heightDynamic(23),
+        ),
         // BigText(text: "Chinese Side", size: Dimensions.heightDynamic(26),),
         SizedBox(height: Dimensions.heightDynamic(8)),
         Row(
@@ -40,9 +43,7 @@ class AppColumn extends StatelessWidget {
             SmallText(text: "comments"),
           ],
         ),
-        SizedBox(
-          height: Dimensions.heightDynamic(15),
-        ),
+        SizedBox(height: Dimensions.heightDynamic(10)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -59,7 +60,8 @@ class AppColumn extends StatelessWidget {
                 iconColor: AppColors.iconColor2,
                 text: "32"),
           ],
-        )
+        ),
+        SizedBox(height: Dimensions.heightDynamic(3)),
       ],
     );
   }

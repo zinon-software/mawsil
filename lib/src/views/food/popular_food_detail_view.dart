@@ -32,9 +32,9 @@ class PopularFoodDetailView extends StatelessWidget {
               height: Dimensions.heightDynamic(350),
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 173, 157, 5),
+                color: const Color.fromARGB(255, 173, 157, 5),
                 image: DecorationImage(
-                  image:  NetworkImage(product.img!),
+                  image: NetworkImage(product.img!),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -86,8 +86,7 @@ class PopularFoodDetailView extends StatelessWidget {
                   SizedBox(height: Dimensions.heightDynamic(20)),
                   Expanded(
                     child: SingleChildScrollView(
-                      child: ExpandableTextWidget(
-                          text: product.description!),
+                      child: ExpandableTextWidget(text: product.description!),
                     ),
                   ),
                 ],
