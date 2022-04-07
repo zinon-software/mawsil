@@ -4,6 +4,7 @@ import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
 
+import '../../../routes.dart';
 import '../../controllers/recommended_product_controller.dart';
 import '../../models/product_model.dart';
 import '../../widgets/icon/app_icon.dart';
@@ -28,7 +29,7 @@ class RecommendedFoodDetailView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
                 GestureDetector(
-                  onTap: ()=> Get.back(),
+                  onTap: ()=> Get.toNamed(RouteHelper.initial),
                   child: const AppIcon(
                     icon: Icons.close,
                   ),

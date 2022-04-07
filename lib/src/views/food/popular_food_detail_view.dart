@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mawsil/routes.dart';
+import 'package:mawsil/src/controllers/cart_controller.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
@@ -20,7 +22,8 @@ class PopularFoodDetailView extends StatelessWidget {
     ProductModel product =
         Get.find<PopularProductController>().popularProductList[pageId];
 
-    Get.find<PopularProductController>().initProduct();
+    Get.find<PopularProductController>()
+        .initProduct(product, Get.find<CartController>());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -50,13 +53,42 @@ class PopularFoodDetailView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () => Get.back(),
+                  onTap: () => Get.toNamed(RouteHelper.initial),
                   child: const AppIcon(
                     icon: Icons.arrow_back_ios,
                   ),
                 ),
-                const AppIcon(
-                  icon: Icons.shopping_cart_outlined,
+                GetBuilder<PopularProductController>(
+                  builder: (popularController) => Stack(
+                    children: [
+                      const AppIcon(
+                        icon: Icons.shopping_cart_outlined,
+                      ),
+                      popularController.totalItems >= 1
+                          ? Positioned(
+                              top: 0,
+                              right: 0,
+                              child: AppIcon(
+                                icon: Icons.circle,
+                                size: Dimensions.heightDynamic(20),
+                                iconColor: Colors.transparent,
+                                backgroundColor: AppColors.mainColor,
+                              ),
+                            )
+                          : Container(),
+                      popularController.totalItems >= 1
+                          ? Positioned(
+                              top: Dimensions.heightDynamic(2),
+                              right: Dimensions.heightDynamic(4),
+                              child: BigText(
+                                text: popularController.totalItems.toString(),
+                                size: Dimensions.heightDynamic(13),
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container()
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -134,7 +166,12 @@ class PopularFoodDetailView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () => popularController.setQuantity(false),
+                      onTap: () => popularController.inCartItems <= 0
+                          ? Get.snackbar(
+                              "Item count", "You can't reduce more !",
+                              backgroundColor: AppColors.mainColor,
+                              colorText: Colors.white)
+                          : popularController.setQuantity(false),
                       child: Icon(
                         Icons.remove,
                         color: AppColors.signColor,
@@ -143,12 +180,16 @@ class PopularFoodDetailView extends StatelessWidget {
                     SizedBox(
                       width: Dimensions.heightDynamic(10) / 2,
                     ),
-                    BigText(text: popularController.quantity.toString()),
+                    BigText(text: popularController.inCartItems.toString()),
                     SizedBox(
                       width: Dimensions.heightDynamic(10) / 2,
                     ),
                     GestureDetector(
-                      onTap: () => popularController.setQuantity(true),
+                      onTap: () => popularController.inCartItems >= 20
+                          ? Get.snackbar("Item count", "You can't add more !",
+                              backgroundColor: AppColors.mainColor,
+                              colorText: Colors.white)
+                          : popularController.setQuantity(true),
                       child: Icon(
                         Icons.add,
                         color: AppColors.signColor,
@@ -157,17 +198,22 @@ class PopularFoodDetailView extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
-                decoration: BoxDecoration(
-                  color: AppColors.mainColor,
-                  borderRadius: BorderRadius.circular(
-                    Dimensions.heightDynamic(20),
+              GestureDetector(
+                onTap: () => popularController.addItem(product),
+                child: Container(
+                  padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
+                  decoration: BoxDecoration(
+                    color: AppColors.mainColor,
+                    borderRadius: BorderRadius.circular(
+                      Dimensions.heightDynamic(20),
+                    ),
                   ),
-                ),
-                child: BigText(
-                  text: "\$${product.price} | Add to cart",
-                  color: Colors.white,
+                  child: GestureDetector(
+                    child: BigText(
+                      text: "\$${product.price} | Add to cart",
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],

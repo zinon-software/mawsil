@@ -1,5 +1,7 @@
 
 import 'package:get/get.dart';
+import 'package:mawsil/src/controllers/cart_controller.dart';
+import 'package:mawsil/src/repository/cart_repo.dart';
 
 import 'src/controllers/popular_product_controller.dart';
 import 'src/controllers/recommended_product_controller.dart';
@@ -15,8 +17,10 @@ Future<void> init() async{
   // repos
   Get.lazyPut(() => PopularProductRepo(apiClient: Get.find()));
   Get.lazyPut(() => RecommendeProductRepo(apiClient: Get.find()));
+  Get.lazyPut(() => CartRepo());
 
   // controllers
   Get.lazyPut(() => PopularProductController(popularProductRepo: Get.find()));
   Get.lazyPut(() => RecommendedProductController(recommendeProductRepo: Get.find()));
+  Get.lazyPut(() => CartController(cartRepo: Get.find()));
 }
