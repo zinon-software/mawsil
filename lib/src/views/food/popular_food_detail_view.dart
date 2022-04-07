@@ -11,6 +11,7 @@ import '../../models/product_model.dart';
 import '../../widgets/column.dart';
 import '../../widgets/icon/app_icon.dart';
 import '../../widgets/text/exandable_text_widget.dart';
+import 'components/app_bar_food.dart';
 
 class PopularFoodDetailView extends StatelessWidget {
   final int pageId;
@@ -24,6 +25,7 @@ class PopularFoodDetailView extends StatelessWidget {
 
     Get.find<PopularProductController>()
         .initProduct(product, Get.find<CartController>());
+        
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -49,49 +51,7 @@ class PopularFoodDetailView extends StatelessWidget {
             top: Dimensions.heightDynamic(45),
             left: Dimensions.heightDynamic(20),
             right: Dimensions.heightDynamic(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () => Get.toNamed(RouteHelper.initial),
-                  child: const AppIcon(
-                    icon: Icons.arrow_back_ios,
-                  ),
-                ),
-                GetBuilder<PopularProductController>(
-                  builder: (popularController) => Stack(
-                    children: [
-                      const AppIcon(
-                        icon: Icons.shopping_cart_outlined,
-                      ),
-                      popularController.totalItems >= 1
-                          ? Positioned(
-                              top: 0,
-                              right: 0,
-                              child: AppIcon(
-                                icon: Icons.circle,
-                                size: Dimensions.heightDynamic(20),
-                                iconColor: Colors.transparent,
-                                backgroundColor: AppColors.mainColor,
-                              ),
-                            )
-                          : Container(),
-                      popularController.totalItems >= 1
-                          ? Positioned(
-                              top: Dimensions.heightDynamic(2),
-                              right: Dimensions.heightDynamic(4),
-                              child: BigText(
-                                text: popularController.totalItems.toString(),
-                                size: Dimensions.heightDynamic(13),
-                                color: Colors.white,
-                              ),
-                            )
-                          : Container()
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child:const AppBarFoodView(),
           ),
           // introduction of food
           Positioned(
@@ -208,11 +168,9 @@ class PopularFoodDetailView extends StatelessWidget {
                       Dimensions.heightDynamic(20),
                     ),
                   ),
-                  child: GestureDetector(
-                    child: BigText(
-                      text: "\$${product.price} | Add to cart",
-                      color: Colors.white,
-                    ),
+                  child: BigText(
+                    text: "\$${popularController.inCartItems==0?product.price! :product.price! * popularController.inCartItems} | Add to cart",
+                    color: Colors.white,
                   ),
                 ),
               ),
