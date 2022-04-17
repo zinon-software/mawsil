@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mawsil/src/controllers/cart_controller.dart';
 import 'package:mawsil/src/models/product_model.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
+import '../models/cart_model.dart';
 import '../models/popular_product_model.dart';
 import '../repository/popular_product_repo.dart';
 
@@ -62,4 +63,7 @@ class PopularProductController extends GetxController {
   }
 
   int get totalItems => _cartController.totalItems;
+
+  List<CartModel> get getItems => _cartController.getItems;
+
 }

@@ -11,6 +11,7 @@ import '../../models/product_model.dart';
 import '../../widgets/column.dart';
 import '../../widgets/icon/app_icon.dart';
 import '../../widgets/text/exandable_text_widget.dart';
+import 'components/add_to_cart_button.dart';
 import 'components/app_bar_food.dart';
 
 class PopularFoodDetailView extends StatelessWidget {
@@ -25,7 +26,7 @@ class PopularFoodDetailView extends StatelessWidget {
 
     Get.find<PopularProductController>()
         .initProduct(product, Get.find<CartController>());
-        
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -51,7 +52,7 @@ class PopularFoodDetailView extends StatelessWidget {
             top: Dimensions.heightDynamic(45),
             left: Dimensions.heightDynamic(20),
             right: Dimensions.heightDynamic(20),
-            child:const AppBarFoodView(),
+            child: const AppBarFoodView(),
           ),
           // introduction of food
           Positioned(
@@ -158,22 +159,8 @@ class PopularFoodDetailView extends StatelessWidget {
                   ],
                 ),
               ),
-              GestureDetector(
-                onTap: () => popularController.addItem(product),
-                child: Container(
-                  padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
-                  decoration: BoxDecoration(
-                    color: AppColors.mainColor,
-                    borderRadius: BorderRadius.circular(
-                      Dimensions.heightDynamic(20),
-                    ),
-                  ),
-                  child: BigText(
-                    text: "\$${popularController.inCartItems==0?product.price! :product.price! * popularController.inCartItems} | Add to cart",
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              AddToCartFoodView(
+                  product: product, popularController: popularController),
             ],
           ),
         ),

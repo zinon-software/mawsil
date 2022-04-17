@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mawsil/src/controllers/popular_product_controller.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
+import 'package:mawsil/src/views/food/components/add_to_cart_button.dart';
 import 'package:mawsil/src/views/food/components/app_bar_food.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
 
@@ -96,7 +97,7 @@ class RecommendedFoodDetailView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () => popularController.inCartItems <= 0
+                    onTap: () => popularController.inCartItems <= 0 // check quantity
                         ? Get.snackbar("Item count", "You can't reduce more !",
                             backgroundColor: AppColors.mainColor,
                             colorText: Colors.white)
@@ -115,7 +116,7 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     size: Dimensions.heightDynamic(26),
                   ),
                   GestureDetector(
-                    onTap: () => popularController.inCartItems >= 20
+                    onTap: () => popularController.inCartItems >= 20 // check quantity
                         ? Get.snackbar("Item count", "You can't add more !",
                             backgroundColor: AppColors.mainColor,
                             colorText: Colors.white)
@@ -151,23 +152,7 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     backgroundColor: Colors.white,
                     iconSize: Dimensions.heightDynamic(24),
                   ),
-                  GestureDetector(
-                    onTap: () => popularController.addItem(product),
-                    child: Container(
-                      padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
-                      decoration: BoxDecoration(
-                        color: AppColors.mainColor,
-                        borderRadius: BorderRadius.circular(
-                          Dimensions.heightDynamic(20),
-                        ),
-                      ),
-                      child: BigText(
-                        text:
-                            "\$${popularController.inCartItems == 0 ? product.price! : product.price! * popularController.inCartItems} | Add to cart",
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  AddToCartFoodView(product: product, popularController: popularController),
                 ],
               ),
             ),
