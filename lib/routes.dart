@@ -8,12 +8,12 @@ class RouteHelper {
   static const String initial = "/";
   static const String popularFood = "/popular-food";
   static const String recommendedFood = "/recommended-food";
-  static const String cart = "/cart";
+  static const String cartPage = "/cart-page";
 
   static String getInitial() => initial;
   static String getPopularFood(int pageId) => "$popularFood?pageId=$pageId";
   static String getRrecommendedFood(int pageId) => "$recommendedFood?pageId=$pageId";
-  static String get getCart => cart;
+  static String get getCartPage => cartPage;
 
 
   static List<GetPage> routes = [
@@ -29,7 +29,7 @@ class RouteHelper {
       return RecommendedFoodDetailView(pageId: int.parse(pageId!));
     }, transition: Transition.fadeIn),
 
-    GetPage(name: cart, page: ()=> const CartView()),
+    GetPage(name: cartPage, page: ()=> const CartView(), transition: Transition.fadeIn),
 
   ];
 }

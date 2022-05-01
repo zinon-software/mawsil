@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../routes.dart';
 import '../../../controllers/popular_product_controller.dart';
@@ -43,8 +45,11 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
         // slide show page
         GetBuilder<PopularProductController>(builder: (popularProducts) {
           return !popularProducts.isLoaded
-              ? CircularProgressIndicator(
-                  color: AppColors.mainColor,
+              ? Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                    color: Theme.of(context).textTheme.headline1!.color!,
+                    size: 45.0,
+                  ),
                 )
               : SizedBox(
                   height: Dimensions.widthDynamic(300),
@@ -110,19 +115,36 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
         transform: matrix,
         child: Stack(
           children: [
-            Container(
-              height: Dimensions.widthDynamic(210),
+            CachedNetworkImage(
+              imageUrl: popularProduct.img!,
+              imageBuilder: (context, imageProvider) => Container(
+                height: Dimensions.widthDynamic(210),
               margin: EdgeInsets.only(
                   left: Dimensions.heightDynamic(5),
                   right: Dimensions.heightDynamic(5)),
-              decoration: BoxDecoration(
-                color: index.isEven ? Colors.orange : const Color(0xFF9294cc),
-                borderRadius:
-                    BorderRadius.circular(Dimensions.heightDynamic(30)),
-                image: DecorationImage(
-                  image: NetworkImage(popularProduct.img!),
-                  // image: DecorationImage(image: AssetImage("assets/image/food.jpg"),
-                  fit: BoxFit.cover,
+                decoration: BoxDecoration(
+                  color:
+                      index.isEven ? Colors.orange : const Color(0xFF9294cc),
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.heightDynamic(30)),
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                    // colorFilter:
+                    //     ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                  ),
+                ),
+              ),
+              placeholder: (context, url) => Center(
+                child: LoadingAnimationWidget.staggeredDotsWave(
+                  color: Theme.of(context).textTheme.headline1!.color!,
+                  size: 45.0,
+                ),
+              ),
+              errorWidget: (context, url, error) => Center(
+                child: Icon(
+                  Icons.hide_image_outlined,
+                  color: Theme.of(context).textTheme.headline1!.color,
                 ),
               ),
             ),

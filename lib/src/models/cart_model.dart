@@ -1,3 +1,5 @@
+import 'package:mawsil/src/models/product_model.dart';
+
 class CartModel {
   CartModel({
     this.id,
@@ -7,6 +9,7 @@ class CartModel {
     this.quantity,
     this.isExite,
     this.time,
+    this.product,
   });
 
   int? id;
@@ -16,6 +19,7 @@ class CartModel {
   int? quantity;
   bool? isExite;
   DateTime? time;
+  ProductModel? product;
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         id: json["id"],
@@ -25,6 +29,7 @@ class CartModel {
         quantity: json["quantity"],
         isExite: json["isExite"],
         time: json["time"],
+        product: ProductModel.fromJson(json["product"])
       );
 
   Map<String, dynamic> toJson() => {

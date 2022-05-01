@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mawsil/src/controllers/popular_product_controller.dart';
 import 'package:mawsil/src/models/product_model.dart';
 
 import '../../../utilities/app_colors.dart';
 import '../../../utilities/dimensions.dart';
-import '../../../widgets/icon/app_icon.dart';
 import '../../../widgets/text/big_text_widget.dart';
 
 class AddToCartFoodView extends StatelessWidget {
@@ -16,20 +17,38 @@ class AddToCartFoodView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => popularController.addItem(product),
-      child: Container(
-        padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
-        decoration: BoxDecoration(
-          color: AppColors.mainColor,
-          borderRadius: BorderRadius.circular(
-            Dimensions.heightDynamic(20),
+    return GetBuilder<PopularProductController>(
+        builder: (recommendedProducts) => GestureDetector(
+        onTap: () async {
+          popularController.setAddToCart = true;
+          popularController.addItem(product);
+          
+          await Future.delayed(const Duration(seconds: 1));
+          popularController.setAddToCart = false;
+
+        },
+        child: Container(
+          padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
+          decoration: BoxDecoration(
+            color: AppColors.mainColor,
+            borderRadius: BorderRadius.circular(
+              Dimensions.heightDynamic(20),
+            ),
           ),
-        ),
-        child: BigText(
-          text:
-              "\$${popularController.inCartItems == 0 ? product.price! : product.price! * popularController.inCartItems} | Add to cart",
-          color: Colors.white,
+          child: popularController.isAddToCart ? SizedBox(
+            height: Dimensions.heightDynamic(25),
+            width: Dimensions.heightDynamic(160),
+                child: Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
+                ),
+              ) :BigText(
+            text:
+                "\$${popularController.inCartItems == 0 ? product.price! : product.price! * popularController.inCartItems} | Add to cart",
+            color: Colors.white,
+          ),
         ),
       ),
     );

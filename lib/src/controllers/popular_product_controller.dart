@@ -66,4 +66,11 @@ class PopularProductController extends GetxController {
 
   List<CartModel> get getItems => _cartController.getItems;
 
+
+  bool _isAddToCart = false;
+  bool get isAddToCart => _isAddToCart;
+  void set setAddToCart(bool val) {
+    _isAddToCart = val;
+    update();
+  }
 }

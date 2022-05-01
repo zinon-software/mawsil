@@ -1,13 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mawsil/src/controllers/popular_product_controller.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/views/food/components/add_to_cart_button.dart';
 import 'package:mawsil/src/views/food/components/app_bar_food.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
-
-import '../../../routes.dart';
 import '../../controllers/cart_controller.dart';
 import '../../controllers/recommended_product_controller.dart';
 import '../../models/product_model.dart';
@@ -36,31 +36,45 @@ class RecommendedFoodDetailView extends StatelessWidget {
             title: const AppBarFoodView(),
             bottom: PreferredSize(
                 child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Dimensions.heightDynamic(20)),
-                        topRight: Radius.circular(Dimensions.heightDynamic(20)),
-                      ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Dimensions.heightDynamic(20)),
+                      topRight: Radius.circular(Dimensions.heightDynamic(20)),
                     ),
-                    padding: EdgeInsets.only(
-                        top: Dimensions.heightDynamic(5),
-                        bottom: Dimensions.heightDynamic(10)),
-                    width: double.maxFinite,
-                    child: Center(
-                        child: BigText(
+                  ),
+                  padding: EdgeInsets.only(
+                      top: Dimensions.heightDynamic(5),
+                      bottom: Dimensions.heightDynamic(10)),
+                  width: double.maxFinite,
+                  child: Center(
+                    child: BigText(
                       text: product.name!,
                       size: Dimensions.heightDynamic(26),
-                    ))),
+                    ),
+                  ),
+                ),
                 preferredSize: Size.fromHeight(Dimensions.heightDynamic(20))),
             pinned: true,
             backgroundColor: AppColors.mainColor,
             expandedHeight: Dimensions.heightDynamic(300),
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                product.img!,
+              background: CachedNetworkImage(
+                imageUrl: product.img!,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
+                placeholder: (context, url) => Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                    color: Theme.of(context).textTheme.headline1!.color!,
+                    size: 55.0,
+                  ),
+                ),
+                errorWidget: (context, url, error) => Center(
+                  child: Icon(
+                    Icons.hide_image_outlined,
+                    color: Theme.of(context).textTheme.headline1!.color,
+                  ),
+                ),
               ),
             ),
           ),
@@ -97,7 +111,8 @@ class RecommendedFoodDetailView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () => popularController.inCartItems <= 0 // check quantity
+                    onTap: () => popularController.inCartItems <=
+                            0 // check quantity
                         ? Get.snackbar("Item count", "You can't reduce more !",
                             backgroundColor: AppColors.mainColor,
                             colorText: Colors.white)
@@ -116,11 +131,12 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     size: Dimensions.heightDynamic(26),
                   ),
                   GestureDetector(
-                    onTap: () => popularController.inCartItems >= 20 // check quantity
-                        ? Get.snackbar("Item count", "You can't add more !",
-                            backgroundColor: AppColors.mainColor,
-                            colorText: Colors.white)
-                        : popularController.setQuantity(true),
+                    onTap: () =>
+                        popularController.inCartItems >= 20 // check quantity
+                            ? Get.snackbar("Item count", "You can't add more !",
+                                backgroundColor: AppColors.mainColor,
+                                colorText: Colors.white)
+                            : popularController.setQuantity(true),
                     child: AppIcon(
                       iconSize: Dimensions.heightDynamic(24),
                       iconColor: Colors.white,
@@ -152,7 +168,8 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     backgroundColor: Colors.white,
                     iconSize: Dimensions.heightDynamic(24),
                   ),
-                  AddToCartFoodView(product: product, popularController: popularController),
+                  AddToCartFoodView(
+                      product: product, popularController: popularController),
                 ],
               ),
             ),

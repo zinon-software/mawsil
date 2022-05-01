@@ -23,7 +23,7 @@ class AppBarFoodView extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => Get.toNamed(RouteHelper.getCart),
+          onTap: () => Get.toNamed(RouteHelper.getCartPage),
           child: GetBuilder<PopularProductController>(
             builder: (popularController) => Stack(
               children: [

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mawsil/routes.dart';
 import 'package:mawsil/src/controllers/cart_controller.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
@@ -38,11 +40,24 @@ class PopularFoodDetailView extends StatelessWidget {
             child: Container(
               height: Dimensions.heightDynamic(350),
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 173, 157, 5),
-                image: DecorationImage(
-                  image: NetworkImage(product.img!),
-                  fit: BoxFit.cover,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 173, 157, 5),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: product.img!,
+                width: double.maxFinite,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                    color: Theme.of(context).textTheme.headline1!.color!,
+                    size: 55.0,
+                  ),
+                ),
+                errorWidget: (context, url, error) => Center(
+                  child: Icon(
+                    Icons.hide_image_outlined,
+                    color: Theme.of(context).textTheme.headline1!.color,
+                  ),
                 ),
               ),
             ),
