@@ -110,7 +110,13 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
     }
 
     return GestureDetector(
-      onTap: () => Get.toNamed(RouteHelper.getPopularFood(index)),
+      onTap: () => Get.toNamed(
+        RouteHelper.getPopularFood(index),
+        arguments: {
+          "product": popularProduct,
+          "page": 'main-page',
+        },
+      ),
       child: Transform(
         transform: matrix,
         child: Stack(
@@ -119,12 +125,11 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
               imageUrl: popularProduct.img!,
               imageBuilder: (context, imageProvider) => Container(
                 height: Dimensions.widthDynamic(210),
-              margin: EdgeInsets.only(
-                  left: Dimensions.heightDynamic(5),
-                  right: Dimensions.heightDynamic(5)),
+                margin: EdgeInsets.only(
+                    left: Dimensions.heightDynamic(5),
+                    right: Dimensions.heightDynamic(5)),
                 decoration: BoxDecoration(
-                  color:
-                      index.isEven ? Colors.orange : const Color(0xFF9294cc),
+                  color: index.isEven ? Colors.orange : const Color(0xFF9294cc),
                   borderRadius:
                       BorderRadius.circular(Dimensions.heightDynamic(30)),
                   image: DecorationImage(

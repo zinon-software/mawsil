@@ -17,7 +17,7 @@ class AppBarFoodView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () => Get.toNamed(RouteHelper.initial),
+          onTap: () => Get.toNamed(Get.arguments["page"]=="main-page"? RouteHelper.getInitial :RouteHelper.getCartPage)!.then((value) => Get.arguments['page'] = "main-page"),
           child: const AppIcon(
             icon: Icons.arrow_back_ios,
           ),

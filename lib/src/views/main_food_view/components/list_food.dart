@@ -33,8 +33,13 @@ class ListFoodMainView extends StatelessWidget {
                 ProductModel recommendedProduct =
                     recommendedProducts.recommendeProductList[index];
                 return GestureDetector(
-                  onTap: () =>
-                      Get.toNamed(RouteHelper.getRrecommendedFood(index)),
+                  onTap: () => Get.toNamed(
+                    RouteHelper.getRrecommendedFood(index),
+                    arguments: {
+                      "product": recommendedProduct,
+                      "page": 'main-page',
+                    },
+                  ),
                   child: Container(
                     margin: EdgeInsets.only(
                         left: Dimensions.heightDynamic(20),

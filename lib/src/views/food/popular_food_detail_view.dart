@@ -17,15 +17,12 @@ import 'components/add_to_cart_button.dart';
 import 'components/app_bar_food.dart';
 
 class PopularFoodDetailView extends StatelessWidget {
-  final int pageId;
-  const PopularFoodDetailView({Key? key, required this.pageId})
+  const PopularFoodDetailView({Key? key,})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ProductModel product =
-        Get.find<PopularProductController>().popularProductList[pageId];
-
+    ProductModel product = Get.arguments["product"];
     Get.find<PopularProductController>()
         .initProduct(product, Get.find<CartController>());
 

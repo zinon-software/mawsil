@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,8 @@ import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/icon/app_icon.dart';
 
 import '../../../routes.dart';
+import '../../controllers/popular_product_controller.dart';
+import '../../controllers/recommended_product_controller.dart';
 import '../../widgets/text/big_text_widget.dart';
 import '../../widgets/text/small_text_widget.dart';
 
@@ -102,132 +106,176 @@ class CartView extends StatelessWidget {
                         itemCount: controller.getItems.length,
                         itemBuilder: (context, index) {
                           CartModel cart = controller.getItems[index];
-                          return Row(
-                            children: [
-                              // image section
-                              CachedNetworkImage(
-                                imageUrl: cart.img!,
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  height: Dimensions.heightDynamic(120),
-                                  width: Dimensions.heightDynamic(120),
-                                  decoration: BoxDecoration(
-                                    color: index.isEven
-                                        ? Colors.orange
-                                        : const Color(0xFF9294cc),
-                                    borderRadius: BorderRadius.circular(
-                                      Dimensions.heightDynamic(10),
-                                    ),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                placeholder: (context, url) => Center(
-                                  child: LoadingAnimationWidget
-                                      .staggeredDotsWave(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .color!,
-                                    size: 25.0,
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) => Center(
-                                  child: Icon(
-                                    Icons.hide_image_outlined,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .color,
-                                  ),
-                                ),
-                              ), // text container
-                              Expanded(
-                                child: Container(
-                                  height: Dimensions.heightDynamic(100),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(
-                                          Dimensions.heightDynamic(20)),
-                                      topRight: Radius.circular(
-                                          Dimensions.heightDynamic(20)),
-                                    ),
-                                    color: Colors.white,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: Dimensions.heightDynamic(10),
-                                        right: Dimensions.heightDynamic(10)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        BigText(
-                                          text: cart.name ??
-                                              "Nutritious fruit meal is china",
+                          return GestureDetector(
+                            onTap: () {
+                              var popularIndex =
+                                  Get.find<PopularProductController>()
+                                      .popularProductList
+                                      .indexOf(cart.product!);
+
+                              if (popularIndex >= 0) {
+                                Get.toNamed(
+                                  RouteHelper.getPopularFood(popularIndex),
+                                  arguments: {
+                                    "product": cart.product,
+                                    "page": 'cart-page',
+                                  },
+                                );
+                              } else {
+                                var recommendeIndex =
+                                    Get.find<RecommendedProductController>()
+                                        .recommendeProductList
+                                        .indexOf(cart.product!);
+                                Get.toNamed(
+                                  RouteHelper.getRrecommendedFood(
+                                      recommendeIndex),
+                                  arguments: {
+                                    "product": cart.product,
+                                    "page": 'cart-page',
+                                  },
+                                );
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                              child: Row(
+                                children: [
+                                  // image section
+                                  CachedNetworkImage(
+                                    imageUrl: cart.img!,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      height: Dimensions.heightDynamic(120),
+                                      width: Dimensions.heightDynamic(120),
+                                      decoration: BoxDecoration(
+                                        color: index.isEven
+                                            ? Colors.orange
+                                            : const Color(0xFF9294cc),
+                                        borderRadius: BorderRadius.circular(
+                                          Dimensions.heightDynamic(10),
                                         ),
-                                        SizedBox(
-                                          height: Dimensions.heightDynamic(8),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
                                         ),
-                                        SmallText(
-                                          text: "Shpt",
+                                      ),
+                                    ),
+                                    placeholder: (context, url) => Center(
+                                      child: LoadingAnimationWidget
+                                          .staggeredDotsWave(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headline1!
+                                            .color!,
+                                        size: 25.0,
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Center(
+                                      child: Icon(
+                                        Icons.hide_image_outlined,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headline1!
+                                            .color,
+                                      ),
+                                    ),
+                                  ), // text container
+                                  Expanded(
+                                    child: Container(
+                                      height: Dimensions.heightDynamic(100),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(
+                                              Dimensions.heightDynamic(20)),
+                                          topRight: Radius.circular(
+                                              Dimensions.heightDynamic(20)),
                                         ),
-                                        Row(
+                                        color: Colors.white,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: Dimensions.heightDynamic(10),
+                                            right:
+                                                Dimensions.heightDynamic(10)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.center,
                                           children: [
                                             BigText(
-                                              color: Colors.red,
-                                              text: "\$ ${cart.price! * cart.quantity!}",
-                                            ),
+                                                text: cart.name ??
+                                                    "Nutritious fruit meal is china"),
+                                            SizedBox(
+                                                height:
+                                                    Dimensions.heightDynamic(
+                                                        8)),
+                                            SmallText(text: "Spicy"),
                                             Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                GestureDetector(
-                                                  onTap: () => controller.addItem(cart.product!, -1),
-                                                  child: Icon(
-                                                    Icons.remove,
-                                                    color:
-                                                        AppColors.signColor,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: Dimensions
-                                                          .heightDynamic(10) /
-                                                      2,
-                                                ),
                                                 BigText(
-                                                    text: cart.quantity
-                                                        .toString()),
-                                                SizedBox(
-                                                  width: Dimensions
-                                                          .heightDynamic(10) /
-                                                      2,
+                                                  color: Colors.red,
+                                                  text:
+                                                      "\$ ${cart.price! * cart.quantity!}",
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () => controller.addItem(cart.product!, 1),
-                                                  child: Icon(
-                                                    Icons.add,
-                                                    color:
-                                                        AppColors.signColor,
-                                                  ),
+                                                Row(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () =>
+                                                          controller.addItem(
+                                                              cart.product!,
+                                                              -1),
+                                                      child: Icon(
+                                                        Icons.remove,
+                                                        color:
+                                                            AppColors.signColor,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Dimensions
+                                                              .heightDynamic(
+                                                                  10) /
+                                                          2,
+                                                    ),
+                                                    BigText(
+                                                        text: cart.quantity
+                                                            .toString()),
+                                                    SizedBox(
+                                                      width: Dimensions
+                                                              .heightDynamic(
+                                                                  10) /
+                                                          2,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () =>
+                                                          controller.addItem(
+                                                              cart.product!, 1),
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        color:
+                                                            AppColors.signColor,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
+                                            SizedBox(
+                                              height:
+                                                  Dimensions.heightDynamic(8),
+                                            ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          height: Dimensions.heightDynamic(8),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           );
                         })),
                   )),
@@ -259,7 +307,8 @@ class CartView extends StatelessWidget {
                     Dimensions.heightDynamic(20),
                   ),
                 ),
-                child: BigText(text: "\$ " + cartController.priceItems.toString()),
+                child:
+                    BigText(text: "\$ " + cartController.priceItems.toString()),
               ),
               GestureDetector(
                 onTap: () => print("chech out"),

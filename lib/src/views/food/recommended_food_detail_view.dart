@@ -15,14 +15,13 @@ import '../../widgets/icon/app_icon.dart';
 import '../../widgets/text/exandable_text_widget.dart';
 
 class RecommendedFoodDetailView extends StatelessWidget {
-  final int pageId;
-  const RecommendedFoodDetailView({Key? key, required this.pageId})
+  const RecommendedFoodDetailView({Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ProductModel product =
-        Get.find<RecommendedProductController>().recommendeProductList[pageId];
+         ProductModel product = Get.arguments["product"];
+
     Get.find<PopularProductController>()
         .initProduct(product, Get.find<CartController>());
 
