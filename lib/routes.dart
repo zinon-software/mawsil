@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mawsil/src/views/cart/cart_view.dart';
+import 'src/controllers/cart_controller.dart';
+import 'src/controllers/popular_product_controller.dart';
 import 'src/views/food/popular_food_detail_view.dart';
 import 'src/views/food/recommended_food_detail_view.dart';
 import 'src/views/main_food_view/main_food_view.dart';
@@ -20,11 +22,19 @@ class RouteHelper {
     GetPage(name: initial, page: () => const MainFoodView()),
     GetPage(
         name: popularFood,
-        page: () => const PopularFoodDetailView(),
+        page: () {
+          Get.find<PopularProductController>()
+        .initProduct(Get.arguments["product"], Get.find<CartController>());
+          return const PopularFoodDetailView();
+        },
         transition: Transition.fadeIn),
     GetPage(
         name: recommendedFood,
-        page: () => const RecommendedFoodDetailView(),
+        page: () {
+          Get.find<PopularProductController>()
+        .initProduct(Get.arguments["product"], Get.find<CartController>());
+          return const RecommendedFoodDetailView();
+        },
         transition: Transition.fadeIn),
     GetPage(
         name: cartPage,

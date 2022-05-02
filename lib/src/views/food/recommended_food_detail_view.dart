@@ -22,9 +22,6 @@ class RecommendedFoodDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
          ProductModel product = Get.arguments["product"];
 
-    Get.find<PopularProductController>()
-        .initProduct(product, Get.find<CartController>());
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(

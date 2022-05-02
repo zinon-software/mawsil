@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../utilities/functions.dart';
+
 class ApiClient extends GetConnect implements GetxService {
 
   late String token = "";
@@ -19,9 +21,10 @@ class ApiClient extends GetConnect implements GetxService {
 
   Future<Response> getData(String uri)async{
     try {
-      Response response = await get(uri).timeout(Duration(seconds: 15));
+      Response response = await get(uri).timeout(Duration(seconds: 5));
       return response;
     } catch (e) {
+      openDialog("TimeOut", message: e.toString());
       return Response(statusCode: 1, statusText: e.toString());
     } 
   }

@@ -114,7 +114,7 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
         RouteHelper.getPopularFood(index),
         arguments: {
           "product": popularProduct,
-          "page": 'main-page',
+          "page": 'main-food-page',
         },
       ),
       child: Transform(

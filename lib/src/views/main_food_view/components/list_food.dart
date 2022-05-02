@@ -37,7 +37,7 @@ class ListFoodMainView extends StatelessWidget {
                     RouteHelper.getRrecommendedFood(index),
                     arguments: {
                       "product": recommendedProduct,
-                      "page": 'main-page',
+                      "page": 'main-food-page',
                     },
                   ),
                   child: Container(

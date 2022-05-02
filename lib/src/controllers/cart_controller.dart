@@ -88,12 +88,12 @@ class CartController extends GetxController {
     return totalQuantity;
   }
 
-  int get priceItems {
-    var totalPrice = 0;
+  int get totalAmount {
+    var total = 0;
     _items.forEach((key, value) {
-      totalPrice  += value.price! *  value.quantity!;
+      total  += value.price! *  value.quantity!;
     });
-    return totalPrice;
+    return total;
   }
 
   List<CartModel> get getItems => _items.entries.map((e) => e.value).toList();
