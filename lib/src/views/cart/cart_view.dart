@@ -40,7 +40,7 @@ class CartView extends StatelessWidget {
                 ),
                 SizedBox(width: Dimensions.heightDynamic(20) * 5),
                 GestureDetector(
-                  onTap: () => Get.toNamed(RouteHelper.initial),
+                  onTap: () => Get.toNamed(RouteHelper.getHomePage),
                   child: AppIcon(
                     icon: Icons.home_outlined,
                     iconColor: Colors.white,
@@ -118,7 +118,7 @@ class CartView extends StatelessWidget {
 
                                     if (popularIndex >= 0) {
                                       Get.toNamed(
-                                        RouteHelper.getPopularFood(
+                                        RouteHelper.getPopularFoodPage(
                                             popularIndex),
                                         arguments: {
                                           "product": cart.product,
@@ -131,7 +131,7 @@ class CartView extends StatelessWidget {
                                           .recommendeProductList
                                           .indexOf(cart.product!);
                                       Get.toNamed(
-                                        RouteHelper.getRrecommendedFood(
+                                        RouteHelper.getRrecommendedFoodPage(
                                             recommendeIndex),
                                         arguments: {
                                           "product": cart.product,

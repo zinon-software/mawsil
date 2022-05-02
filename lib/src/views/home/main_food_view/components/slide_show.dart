@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../../../../routes.dart';
-import '../../../controllers/popular_product_controller.dart';
-import '../../../models/product_model.dart';
-import '../../../utilities/app_colors.dart';
-import '../../../utilities/dimensions.dart';
-import '../../../widgets/column.dart';
+import '../../../../../routes.dart';
+import '../../../../controllers/popular_product_controller.dart';
+import '../../../../models/product_model.dart';
+import '../../../../utilities/app_colors.dart';
+import '../../../../utilities/dimensions.dart';
+import '../../../../widgets/column.dart';
 
 class SlideShowMainView extends StatefulWidget {
   const SlideShowMainView({Key? key}) : super(key: key);
@@ -111,7 +111,7 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
 
     return GestureDetector(
       onTap: () => Get.toNamed(
-        RouteHelper.getPopularFood(index),
+        RouteHelper.getPopularFoodPage(index),
         arguments: {
           "product": popularProduct,
           "page": 'main-food-page',

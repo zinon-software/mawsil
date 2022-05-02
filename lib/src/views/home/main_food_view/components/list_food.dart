@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:mawsil/routes.dart';
-import '../../../controllers/recommended_product_controller.dart';
-import '../../../models/product_model.dart';
-import '../../../utilities/app_colors.dart';
-import '../../../utilities/dimensions.dart';
-import '../../../widgets/icon_and_text/icon_and_text_widget.dart';
-import '../../../widgets/text/big_text_widget.dart';
-import '../../../widgets/text/small_text_widget.dart';
+import '../../../../../routes.dart';
+import '../../../../controllers/recommended_product_controller.dart';
+import '../../../../models/product_model.dart';
+import '../../../../utilities/app_colors.dart';
+import '../../../../utilities/dimensions.dart';
+import '../../../../widgets/icon_and_text/icon_and_text_widget.dart';
+import '../../../../widgets/text/big_text_widget.dart';
+import '../../../../widgets/text/small_text_widget.dart';
 
 class ListFoodMainView extends StatelessWidget {
   const ListFoodMainView({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class ListFoodMainView extends StatelessWidget {
                     recommendedProducts.recommendeProductList[index];
                 return GestureDetector(
                   onTap: () => Get.toNamed(
-                    RouteHelper.getRrecommendedFood(index),
+                    RouteHelper.getRrecommendedFoodPage(index),
                     arguments: {
                       "product": recommendedProduct,
                       "page": 'main-food-page',

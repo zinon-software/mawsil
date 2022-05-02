@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 
-import '../../../utilities/dimensions.dart';
-import '../../../widgets/text/big_text_widget.dart';
-import '../../../widgets/text/small_text_widget.dart';
+import '../../../../utilities/dimensions.dart';
+import '../../../../widgets/text/big_text_widget.dart';
+import '../../../../widgets/text/small_text_widget.dart';
 
 class AppBarMainView extends StatelessWidget {
   const AppBarMainView({Key? key}) : super(key: key);
