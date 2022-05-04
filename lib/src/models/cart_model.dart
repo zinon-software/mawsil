@@ -28,8 +28,8 @@ class CartModel {
         img: json["img"],
         quantity: json["quantity"],
         isExite: json["isExite"],
-        time: json["time"],
-        product: ProductModel.fromJson(json["product"])
+        time: DateTime.parse(json["time"]),
+        product:ProductModel.fromJson(json["product"])
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +39,7 @@ class CartModel {
         "img": img,
         "quantity": quantity,
         "isExite": isExite,
-        "time": time,
+        "time": time!.toIso8601String(),
+        "product": product!.toJson()
       };
 }
