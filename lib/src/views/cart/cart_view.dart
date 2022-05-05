@@ -217,9 +217,9 @@ class CartView extends StatelessWidget {
                                                       .spaceBetween,
                                               children: [
                                                 BigText(
-                                                    color: Colors.red,
-                                                    text:
-                                                        "\$ ${cart.price!}",),
+                                                  color: Colors.red,
+                                                  text: "\$ ${cart.price!}",
+                                                ),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                       color: AppColors
@@ -279,7 +279,6 @@ class CartView extends StatelessWidget {
                                                             2,
                                                       ),
                                                     ],
-
                                                   ),
                                                 ),
                                               ],
@@ -326,11 +325,18 @@ class CartView extends StatelessWidget {
                     Dimensions.heightDynamic(20),
                   ),
                 ),
-                child:
-                    BigText(text: "\$ " + cartController.totalAmount.toString()),
+                child: BigText(
+                    text: "\$ " + cartController.totalAmount.toString()),
               ),
               GestureDetector(
-                onTap: () => print("chech out"),
+                onTap: () async {
+                  cartController.setAddCheckOut = true;
+
+                  cartController.addToHistory();
+
+                  await Future.delayed(const Duration(seconds: 1));
+                  cartController.setAddCheckOut = false;
+                },
                 child: Container(
                   padding: EdgeInsets.all(Dimensions.heightDynamic(20)),
                   decoration: BoxDecoration(
@@ -339,10 +345,21 @@ class CartView extends StatelessWidget {
                       Dimensions.heightDynamic(20),
                     ),
                   ),
-                  child: BigText(
-                    text: "Check Out",
-                    color: Colors.white,
-                  ),
+                  child: cartController.isAddCheckOut
+                      ? SizedBox(
+                          height: Dimensions.heightDynamic(25),
+                          width: Dimensions.heightDynamic(160),
+                          child: Center(
+                            child: LoadingAnimationWidget.staggeredDotsWave(
+                              color: Colors.white,
+                              size: 20.0,
+                            ),
+                          ),
+                        )
+                      : BigText(
+                          text: "Check Out",
+                          color: Colors.white,
+                        ),
                 ),
               ),
             ],

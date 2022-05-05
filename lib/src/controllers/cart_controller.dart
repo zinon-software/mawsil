@@ -15,7 +15,8 @@ class CartController extends GetxController {
   // only for storage and sharedprefrence
   List<CartModel> storageItems=[];
 
-  void addItem(ProductModel product, int quantity) {
+
+  addItem(ProductModel product, int quantity) {
     var totalQuantity = 0;
     if (_items.containsKey(product.id!)) {
       _items.update(
@@ -60,7 +61,7 @@ class CartController extends GetxController {
             backgroundColor: AppColors.mainColor, colorText: Colors.white);
       }
     }
-    cartRepo.addToCartList(getItems);
+    cartRepo.addToCartStorageList(getItems);
     update();
   }
 
@@ -102,9 +103,7 @@ class CartController extends GetxController {
 
   List<CartModel> get getItems => _items.entries.map((e) => e.value).toList();
 
-  getCartDataStorage(){
-     setCart = cartRepo.getCartList;
-  }
+  getCartStorageData()=> setCart = cartRepo.getCartStorageList;
 
   set setCart(List<CartModel> items){
     storageItems=items;
@@ -114,4 +113,21 @@ class CartController extends GetxController {
     }
   }
 
+  addToHistory(){
+    cartRepo.addToCartHistoryList();
+    clearMapItems();
+  }
+
+  clearMapItems() {
+    _items.clear();
+    update();
+  } 
+
+  // check out button
+  bool _isAddCheckOut = false;
+  bool get isAddCheckOut => _isAddCheckOut;
+  set setAddCheckOut(bool val) {
+    _isAddCheckOut = val;
+    update();
+  }
 }

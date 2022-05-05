@@ -8,19 +8,16 @@ import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/views/food/components/add_to_cart_button.dart';
 import 'package:mawsil/src/views/food/components/app_bar_food.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';
-import '../../controllers/cart_controller.dart';
-import '../../controllers/recommended_product_controller.dart';
 import '../../models/product_model.dart';
 import '../../widgets/icon/app_icon.dart';
 import '../../widgets/text/exandable_text_widget.dart';
 
 class RecommendedFoodDetailView extends StatelessWidget {
-  const RecommendedFoodDetailView({Key? key})
-      : super(key: key);
+  const RecommendedFoodDetailView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-         ProductModel product = Get.arguments["product"];
+    ProductModel product = Get.arguments["product"];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -31,26 +28,29 @@ class RecommendedFoodDetailView extends StatelessWidget {
             toolbarHeight: Dimensions.heightDynamic(80),
             title: const AppBarFoodView(),
             bottom: PreferredSize(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Dimensions.heightDynamic(20)),
-                      topRight: Radius.circular(Dimensions.heightDynamic(20)),
-                    ),
-                  ),
-                  padding: EdgeInsets.only(
-                      top: Dimensions.heightDynamic(5),
-                      bottom: Dimensions.heightDynamic(10)),
-                  width: double.maxFinite,
-                  child: Center(
-                    child: BigText(
-                      text: product.name!,
-                      size: Dimensions.heightDynamic(26),
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Dimensions.heightDynamic(20)),
+                    topRight: Radius.circular(Dimensions.heightDynamic(20)),
                   ),
                 ),
-                preferredSize: Size.fromHeight(Dimensions.heightDynamic(20))),
+                padding: EdgeInsets.only(
+                    top: Dimensions.heightDynamic(5),
+                    bottom: Dimensions.heightDynamic(10)),
+                width: double.maxFinite,
+                child: Center(
+                  child: BigText(
+                    text: product.name!,
+                    size: Dimensions.heightDynamic(26),
+                  ),
+                ),
+              ),
+              preferredSize: Size.fromHeight(
+                Dimensions.heightDynamic(20),
+              ),
+            ),
             pinned: true,
             backgroundColor: AppColors.mainColor,
             expandedHeight: Dimensions.heightDynamic(300),
@@ -165,7 +165,9 @@ class RecommendedFoodDetailView extends StatelessWidget {
                     iconSize: Dimensions.heightDynamic(24),
                   ),
                   AddToCartFoodView(
-                      product: product, popularController: popularController),
+                    product: product,
+                    popularController: popularController,
+                  ),
                 ],
               ),
             ),

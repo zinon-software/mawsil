@@ -4,5 +4,6 @@ class AppConstants {
 
   static const String TOKEN = "موصول";
   static const String CART_LIST = "Cart-List";
+  static const String CART_HISTORY_LIST = "cart-history-list";
 
 }
