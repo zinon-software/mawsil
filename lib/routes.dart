@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:mawsil/src/views/cart/cart_view.dart';
-import 'package:mawsil/src/views/home/home_view.dart';
-import 'package:mawsil/src/views/splash/splash_view.dart';
 import 'src/controllers/cart_controller.dart';
 import 'src/controllers/popular_product_controller.dart';
 import 'src/views/food/popular_food_detail_view.dart';
 import 'src/views/food/recommended_food_detail_view.dart';
+import 'src/views/home/cart/cart_view.dart';
+import 'src/views/home/home_view.dart';
+import 'src/views/splash/splash_view.dart';
 
 
 class RouteHelper {

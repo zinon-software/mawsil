@@ -19,7 +19,7 @@ class RecommendedProductController extends GetxController {
       _isLoaded=true;
       update();
     } else {
-
+      _isLoaded=true;
     }
   }
 

@@ -1,9 +1,9 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mawsil/src/views/cart/cart_history_view.dart';
-import 'package:mawsil/src/views/cart/cart_view.dart';
+import 'package:mawsil/src/views/home/history_view/cart_history_view.dart';
 import '../../controllers/cart_controller.dart';
+import 'cart/cart_view.dart';
 import 'main_food_view/main_food_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -18,8 +18,8 @@ class _HomeViewState extends State<HomeView> {
 
   final List _pages = [
     const MainFoodView(),
-    Container(child: const Center(child: Text("page 2"))),
     const CartHistoryView(),
+    const CartView(),
     Container(child: const Center(child: Text("page 4"))),
   ];
 

@@ -27,7 +27,9 @@ class PopularProductController extends GetxController {
       _popularProductList.addAll(Product.fromJson(response.body).getProducts);
       _isLoaded = true;
       update();
-    } else {}
+    } else {
+      _isLoaded=true;
+    }
   }
 
   void setQuantity(bool isIncrement) {

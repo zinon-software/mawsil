@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,12 +9,12 @@ import 'package:mawsil/src/models/cart_model.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/icon/app_icon.dart';
-
-import '../../../routes.dart';
-import '../../controllers/popular_product_controller.dart';
-import '../../controllers/recommended_product_controller.dart';
-import '../../widgets/text/big_text_widget.dart';
-import '../../widgets/text/small_text_widget.dart';
+import '../../../../routes.dart';
+import '../../../controllers/popular_product_controller.dart';
+import '../../../controllers/recommended_product_controller.dart';
+import '../../../utilities/functions.dart';
+import '../../../widgets/text/big_text_widget.dart';
+import '../../../widgets/text/small_text_widget.dart';
 
 class CartView extends StatelessWidget {
   const CartView({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class CartView extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: Dimensions.heightDynamic(20) * 3,
+            top: Platform.isWindows ? 10 : Dimensions.heightDynamic(20) * 3,
             left: Dimensions.heightDynamic(20),
             right: Dimensions.heightDynamic(20),
             child: Row(
@@ -100,7 +102,15 @@ class CartView extends StatelessWidget {
                   context: context,
                   removeTop: true,
                   child: GetBuilder<CartController>(
-                    builder: ((controller) => ListView.builder(
+                    builder: ((controller) {
+                      if (controller.getItems.isEmpty) {
+                            print("object");
+                            return errorWidget(onClick: (){}, noData: true,
+                    butMsg: 'تحديث',
+                    msg: 'سلتك فارغة',
+                    showBut: true);
+                          } else {
+                        return ListView.builder(
                         itemCount: controller.getItems.length,
                         itemBuilder: (context, index) {
                           CartModel cart = controller.getItems[index];
@@ -130,14 +140,22 @@ class CartView extends StatelessWidget {
                                               RecommendedProductController>()
                                           .recommendeProductList
                                           .indexOf(cart.product!);
-                                      Get.toNamed(
-                                        RouteHelper.getRrecommendedFoodPage(
-                                            recommendeIndex),
-                                        arguments: {
-                                          "product": cart.product,
-                                          "page": 'cart-page',
-                                        },
-                                      );
+                                      if (recommendeIndex < 0) {
+                                        Get.snackbar("History products",
+                                            "Product review is not available for history products !",
+                                            backgroundColor:
+                                                AppColors.mainColor,
+                                            colorText: Colors.white);
+                                      } else {
+                                        Get.toNamed(
+                                          RouteHelper.getRrecommendedFoodPage(
+                                              recommendeIndex),
+                                          arguments: {
+                                            "product": cart.product,
+                                            "page": 'cart-page',
+                                          },
+                                        );
+                                      }
                                     }
                                   },
                                   child: CachedNetworkImage(
@@ -295,7 +313,9 @@ class CartView extends StatelessWidget {
                               ],
                             ),
                           );
-                        })),
+                        });
+                      }
+                    }),
                   )),
             ),
           )

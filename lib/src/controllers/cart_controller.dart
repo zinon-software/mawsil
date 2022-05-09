@@ -9,12 +9,11 @@ class CartController extends GetxController {
   final CartRepo cartRepo;
   CartController({required this.cartRepo});
 
-  final Map<int, CartModel> _items = {};
-  Map<int, CartModel> get getitems => _items;
+  Map<int, CartModel> _items = {};
+  Map<int, CartModel> get getitemsMap => _items;
 
   // only for storage and sharedprefrence
-  List<CartModel> storageItems=[];
-
+  List<CartModel> storageItems = [];
 
   addItem(ProductModel product, int quantity) {
     var totalQuantity = 0;
@@ -88,7 +87,7 @@ class CartController extends GetxController {
   int get totalItems {
     var totalQuantity = 0;
     _items.forEach((key, value) {
-      totalQuantity  += value.quantity!;
+      totalQuantity += value.quantity!;
     });
     return totalQuantity;
   }
@@ -96,32 +95,43 @@ class CartController extends GetxController {
   int get totalAmount {
     var total = 0;
     _items.forEach((key, value) {
-      total  += value.price! *  value.quantity!;
+      total += value.price! * value.quantity!;
     });
     return total;
   }
 
   List<CartModel> get getItems => _items.entries.map((e) => e.value).toList();
 
-  getCartStorageData()=> setCart = cartRepo.getCartStorageList;
+  getCartStorageData() => setCart = cartRepo.getCartStorageList;
 
-  set setCart(List<CartModel> items){
-    storageItems=items;
+  set setCart(List<CartModel> items) {
+    storageItems = items;
     for (var storageItem in storageItems) {
       _items.putIfAbsent(storageItem.product!.id!, () => storageItem);
-      
     }
   }
 
-  addToHistory(){
+  addToHistory() {
     cartRepo.addToCartHistoryList();
     clearMapItems();
   }
 
+  List<CartModel> getCartHistoryList() => cartRepo.getCartHistoryList();
+
   clearMapItems() {
     _items.clear();
     update();
-  } 
+  }
+
+  set setItems(Map<int, CartModel> setItems) {
+    _items = {};
+    _items = setItems;
+  }
+
+  void addToCartList(){
+    cartRepo.addToCartStorageList(getItems);
+    update();
+  }
 
   // check out button
   bool _isAddCheckOut = false;
@@ -130,4 +140,6 @@ class CartController extends GetxController {
     _isAddCheckOut = val;
     update();
   }
+
+
 }

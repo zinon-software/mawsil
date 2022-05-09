@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_svg/svg.dart';
+import '../widgets/default_button.dart';
 import 'app_colors.dart';
-
 
 void openDialog(String title,
     {String? message,
@@ -24,3 +24,49 @@ void openDialog(String title,
     radius: 30,
   );
 }
+
+Widget errorWidget(
+    {bool noData = true,
+    bool showBut = true,
+    String? msg,
+    String? svg,
+    String butMsg = 'إعادة المحاولة',
+    required Function() onClick}) {
+  String img = svg ??
+      (noData
+          ? 'assets/image/errors/no-data.svg'
+          : 'assets/images/errors/no-connection.svg');
+  String test =
+      msg ?? (noData ? 'لا توجد بيانات' : 'الرجاء التحقق من إتصالك بالأنترنت');
+
+ const double padding = 16.0;
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      SvgPicture.asset(
+        img,
+        height: 200.0,
+      ),
+      const SizedBox(
+        height: padding / 2,
+      ),
+      Text(test),
+      const SizedBox(
+        height: padding / 2,
+      ),
+      if (showBut)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: padding * 4),
+          child: 
+          DefaultButton(
+            onClick: onClick,
+            label: butMsg,
+            height: 40.0,
+          ),
+        ),
+    ],
+  );
+}
+
+

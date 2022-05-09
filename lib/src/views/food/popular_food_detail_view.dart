@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:mawsil/routes.dart';
-import 'package:mawsil/src/controllers/cart_controller.dart';
 import 'package:mawsil/src/utilities/app_colors.dart';
 import 'package:mawsil/src/utilities/dimensions.dart';
 import 'package:mawsil/src/widgets/text/big_text_widget.dart';

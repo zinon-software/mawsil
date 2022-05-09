@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mawsil/src/utilities/functions.dart';
 import '../../../../../routes.dart';
 import '../../../../controllers/recommended_product_controller.dart';
 import '../../../../models/product_model.dart';
@@ -17,21 +18,24 @@ class ListFoodMainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RecommendedProductController>(
-        builder: (recommendedProducts) {
-      return !recommendedProducts.isLoaded
+        builder: (recommendedController) {
+      return !recommendedController.isLoaded
           ? Center(
               child: LoadingAnimationWidget.staggeredDotsWave(
                 color: Theme.of(context).textTheme.headline1!.color!,
                 size: 45.0,
               ),
             )
-          : ListView.builder(
+          : (recommendedController.recommendeProductList.isEmpty)? errorWidget(onClick: ()=> recommendedController.getRecommendeProductList(), noData: true,
+                    butMsg: 'تحديث',
+                    msg: 'سلتك فارغة',
+                    showBut: true) :  ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: recommendedProducts.recommendeProductList.length,
+              itemCount: recommendedController.recommendeProductList.length,
               itemBuilder: (context, index) {
                 ProductModel recommendedProduct =
-                    recommendedProducts.recommendeProductList[index];
+                    recommendedController.recommendeProductList[index];
                 return GestureDetector(
                   onTap: () => Get.toNamed(
                     RouteHelper.getRrecommendedFoodPage(index),

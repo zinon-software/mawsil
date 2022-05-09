@@ -9,6 +9,7 @@ import '../../../../controllers/popular_product_controller.dart';
 import '../../../../models/product_model.dart';
 import '../../../../utilities/app_colors.dart';
 import '../../../../utilities/dimensions.dart';
+import '../../../../utilities/functions.dart';
 import '../../../../widgets/column.dart';
 
 class SlideShowMainView extends StatefulWidget {
@@ -43,31 +44,34 @@ class _SlideShowMainViewState extends State<SlideShowMainView> {
     return Column(
       children: [
         // slide show page
-        GetBuilder<PopularProductController>(builder: (popularProducts) {
-          return !popularProducts.isLoaded
+        GetBuilder<PopularProductController>(builder: (popularController) {
+          return !popularController.isLoaded
               ? Center(
                   child: LoadingAnimationWidget.staggeredDotsWave(
                     color: Theme.of(context).textTheme.headline1!.color!,
                     size: 45.0,
                   ),
                 )
-              : SizedBox(
+              : (popularController.popularProductList.isEmpty)? errorWidget(onClick: ()=> popularController.getPopularProductList(), noData: true,
+                    butMsg: 'تحديث',
+                    msg: 'سلتك فارغة',
+                    showBut: true) :   SizedBox(
                   height: Dimensions.widthDynamic(300),
                   child: PageView.builder(
                     controller: pageController,
-                    itemCount: popularProducts.popularProductList.length,
+                    itemCount: popularController.popularProductList.length,
                     itemBuilder: (BuildContext context, int position) =>
                         _buildPageItem(position,
-                            popularProducts.popularProductList[position]),
+                            popularController.popularProductList[position]),
                   ),
                 );
         }),
         // dots
-        GetBuilder<PopularProductController>(builder: (popularProducts) {
+        GetBuilder<PopularProductController>(builder: (popularController) {
           return DotsIndicator(
-            dotsCount: popularProducts.popularProductList.isEmpty
+            dotsCount: popularController.popularProductList.isEmpty
                 ? 1
-                : popularProducts.popularProductList.length,
+                : popularController.popularProductList.length,
             position: _currPageValue,
             decorator: DotsDecorator(
               activeColor: AppColors.mainColor,
