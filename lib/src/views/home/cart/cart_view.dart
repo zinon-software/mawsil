@@ -53,7 +53,7 @@ class CartView extends StatelessWidget {
                 GestureDetector(
                   onTap: () => Get.toNamed(RouteHelper.getCartPage),
                   child: GetBuilder<CartController>(
-                    builder: (cartController) => Stack(
+                    builder: (_cartController) => Stack(
                       children: [
                         AppIcon(
                           icon: Icons.shopping_cart_checkout,
@@ -61,7 +61,7 @@ class CartView extends StatelessWidget {
                           backgroundColor: AppColors.mainColor,
                           iconSize: Dimensions.heightDynamic(20),
                         ),
-                        cartController.totalItems >= 1
+                        _cartController.totalItems >= 1
                             ? Positioned(
                                 top: 0,
                                 right: 0,
@@ -73,12 +73,12 @@ class CartView extends StatelessWidget {
                                 ),
                               )
                             : Container(),
-                        cartController.totalItems >= 1
+                        _cartController.totalItems >= 1
                             ? Positioned(
                                 top: Dimensions.heightDynamic(2),
                                 right: Dimensions.heightDynamic(4),
                                 child: BigText(
-                                  text: cartController.totalItems.toString(),
+                                  text: _cartController.totalItems.toString(),
                                   size: Dimensions.heightDynamic(13),
                                   color: Colors.black,
                                 ),
@@ -102,18 +102,17 @@ class CartView extends StatelessWidget {
                   context: context,
                   removeTop: true,
                   child: GetBuilder<CartController>(
-                    builder: ((controller) {
-                      if (controller.getItems.isEmpty) {
-                            print("object");
+                    builder: ((_controller) {
+                      if (_controller.getItems.isEmpty) {
                             return errorWidget(onClick: (){}, noData: true,
                     butMsg: 'تحديث',
                     msg: 'سلتك فارغة',
                     showBut: true);
                           } else {
                         return ListView.builder(
-                        itemCount: controller.getItems.length,
+                        itemCount: _controller.getItems.length,
                         itemBuilder: (context, index) {
-                          CartModel cart = controller.getItems[index];
+                          CartModel cart = _controller.getItems[index];
                           return Container(
                             margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                             child: Row(
@@ -255,7 +254,7 @@ class CartView extends StatelessWidget {
                                                       ),
                                                       GestureDetector(
                                                         onTap: () =>
-                                                            controller.addItem(
+                                                            _controller.addItem(
                                                                 cart.product!,
                                                                 -1),
                                                         child: Icon(
@@ -281,7 +280,7 @@ class CartView extends StatelessWidget {
                                                       ),
                                                       GestureDetector(
                                                         onTap: () =>
-                                                            controller.addItem(
+                                                            _controller.addItem(
                                                                 cart.product!,
                                                                 1),
                                                         child: Icon(

@@ -43,6 +43,21 @@ class CartHistoryList extends StatelessWidget {
 
     int listCounter = 0;
 
+    timeWidget(int index) {
+      var outputDate = DateTime.now().toString();
+      if (index < getCartHistoryList.length) {
+        DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss")
+            .parse(getCartHistoryList[listCounter].time!.toString());
+        DateTime inputDate = DateTime.parse(parseDate.toString());
+        var outputFormat = DateFormat("MM/dd/yyyy HH:mm a");
+        outputDate = outputFormat.format(inputDate);
+      }
+
+      return BigText(
+        text: outputDate.toString(),
+      );
+    }
+
     return Container(
       margin: EdgeInsets.only(
         top: Dimensions.heightDynamic(20),
@@ -61,17 +76,7 @@ class CartHistoryList extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    (() {
-                      DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss")
-                          .parse(
-                              getCartHistoryList[listCounter].time!.toString());
-                      DateTime inputDate = DateTime.parse(parseDate.toString());
-                      var outputFormat = DateFormat("MM/dd/yyyy HH:mm a");
-                      var outputDate = outputFormat.format(inputDate);
-                      return BigText(
-                        text: outputDate.toString(),
-                      );
-                    }()),
+                    timeWidget(listCounter),
                     SizedBox(
                       height: Dimensions.heightDynamic(10),
                     ),
@@ -126,14 +131,19 @@ class CartHistoryList extends StatelessWidget {
                                   var orderTime = cartOrderTimeToList();
                                   Map<int, CartModel> moreOrder = {};
 
-                                  for (var element in getCartHistoryList) { 
-                                    if (orderTime[i].toString() == element.time.toString()) {
-                                      moreOrder.putIfAbsent(element.id!, () => CartModel.fromJson(jsonDecode(jsonEncode(element))));
+                                  for (var element in getCartHistoryList) {
+                                    if (orderTime[i].toString() ==
+                                        element.time.toString()) {
+                                      moreOrder.putIfAbsent(
+                                          element.id!,
+                                          () => CartModel.fromJson(
+                                              jsonDecode(jsonEncode(element))));
                                     }
                                   }
 
-                                  Get.find<CartController>().setItems = moreOrder;
-                                   Get.find<CartController>().addToCartList();
+                                  Get.find<CartController>().setItems =
+                                      moreOrder;
+                                  Get.find<CartController>().addToCartList();
                                   Get.toNamed(RouteHelper.getCartPage);
                                 },
                                 child: Container(

@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:mawsil/src/utilities/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/cart_model.dart';
+import '../utilities/app_constants.dart';
 
 class CartRepo {
   final SharedPreferences sharedPreferences;
@@ -15,6 +12,8 @@ class CartRepo {
   List<String> cartListHistory = [];
 
   void addToCartStorageList(List<CartModel> _cartList) {
+    // sharedPreferences.remove(AppConstants.CART_LIST);
+    // sharedPreferences.remove(AppConstants.CART_HISTORY_LIST);
     cartList = [];
     DateTime time = DateTime.now();
     /**
